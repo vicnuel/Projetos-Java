@@ -15,6 +15,9 @@ public class ConverterTipos {
         // String para int
         String exem = "45";
         int exemI = Integer.parseInt(exem);
-        System.out.printf("Agora a variavel String exem = '45' é o inteiro = %d\n", exemI);        
+        System.out.printf("Agora a variavel String exem = '45' é o inteiro = %d\n", exemI); 
+        String exem2 = "45";
+        float exem2I = Float.parseFloat(exem2);
+        System.out.printf("Agora a variavel String exem = '45' é o float = %f\n", exem2I); 
     }   
 }
