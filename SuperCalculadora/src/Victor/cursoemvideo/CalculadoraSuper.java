@@ -174,8 +174,8 @@ public class CalculadoraSuper extends javax.swing.JFrame {
         int VaA = (int) Math.abs(X);
         lblRD2.setText(Integer.toString(res));
         lblEC.setText(Double.toString(cubo));
-        lblRQ.setText(Double.toString(Rqua));
-        lblRC.setText(Double.toString(Rcub));
+        lblRQ.setText(String.format("%.5f", Rqua));
+        lblRC.setText(String.format("%.5f", Rcub));
         lblVA.setText(Integer.toString(VaA));
         panCalc.setVisible(true);
     }//GEN-LAST:event_btnCalularActionPerformed
