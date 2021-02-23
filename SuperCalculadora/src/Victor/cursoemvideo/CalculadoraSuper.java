@@ -46,6 +46,7 @@ public class CalculadoraSuper extends javax.swing.JFrame {
         lblVA = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         btnCalular.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCalular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Calculadora3.png"))); // NOI18N
@@ -144,7 +145,7 @@ public class CalculadoraSuper extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(panCalc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
