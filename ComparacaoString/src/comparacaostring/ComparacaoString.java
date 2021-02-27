@@ -16,6 +16,10 @@ public class ComparacaoString {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        String nome1 = "Victor";
+        String nome2 = "Victor";
+        String nome3 = new String("Victor");
+        
     }
     
 }
