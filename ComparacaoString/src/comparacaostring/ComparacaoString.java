@@ -19,7 +19,11 @@ public class ComparacaoString {
         String nome1 = "Victor";
         String nome2 = "Victor";
         String nome3 = new String("Victor");
-        
+        String res1, res2;
+        res1 = (nome1==nome2)? "igual":"diferente";
+        res2 = (nome1.equals(nome3))? "igual":"diferente";
+        System.out.println(res1);
+        System.out.println(res2);
     }
     
 }
