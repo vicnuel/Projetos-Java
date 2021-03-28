@@ -18,7 +18,7 @@ public class EntradaComJOptionPane {
             
             area = comprimento * largura;
             perimetro = 2*comprimento + 2*largura;
-//            JOptionPane.showMessageDialog(null,"Área = " + area + " Perimetro = " + perimetro);
+            JOptionPane.showMessageDialog(null,"Área = " + area + " Perimetro = " + perimetro);
         } catch(NumberFormatException erro){
             JOptionPane.showMessageDialog(null, "Ouve error na converção, por favor digite apenas caracteres alfanumericos" + erro.toString());
         }
