@@ -5,13 +5,14 @@ import javax.swing.JOptionPane;
 public class questao1 {
 
 	public static void main(String[] args) {
+		try {
             String nome = JOptionPane.showInputDialog("Digite o nome do produto");
-            double preco = Double.parseDouble(JOptionPane.showInputDialog("Digite o preÃ§o do produto")), newpreco = 0;
+            double preco = Double.parseDouble(JOptionPane.showInputDialog("Digite o preço do produto")), newpreco = 0;
             if (preco < 0)
-                JOptionPane.showMessageDialog(null,"PreÃ§o menor que zero, digite apenas numeros positivos");
+                throw new Exception("Preço menor que zero, digite apenas numeros positivos");
             else{
                 if(preco<50)
-                    JOptionPane.showMessageDialog(null,"NÃ£o tem desconto para esse produto");
+                    JOptionPane.showMessageDialog(null,"Não tem desconto para esse produto");
                 else{
                     if(preco >= 50 && preco <200)
                         newpreco = preco * 0.95;
@@ -26,5 +27,8 @@ public class questao1 {
                             "Valor do produto com desconto: " + newpreco);
                 }
             }
+		}catch (Exception e) {
+			JOptionPane.showMessageDialog(null,e.getMessage());
+		}
 	}
 }

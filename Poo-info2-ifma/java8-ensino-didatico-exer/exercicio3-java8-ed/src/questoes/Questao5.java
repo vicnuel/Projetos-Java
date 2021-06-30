@@ -26,27 +26,31 @@ public class Questao5 {
 
 	}
 	static void questao1() {
-        String nome = JOptionPane.showInputDialog("Digite o nome do produto");
-        double preco = Double.parseDouble(JOptionPane.showInputDialog("Digite o pre√ßo do produto")), newpreco = 0;
-        if (preco < 0)
-            JOptionPane.showMessageDialog(null,"Pre√ßo menor que zero, digite apenas numeros positivos");
-        else{
-            if(preco<50)
-                JOptionPane.showMessageDialog(null,"N√£o tem desconto para esse produto");
+		try {
+            String nome = JOptionPane.showInputDialog("Digite o nome do produto");
+            double preco = Double.parseDouble(JOptionPane.showInputDialog("Digite o preÁo do produto")), newpreco = 0;
+            if (preco < 0)
+                throw new Exception("PreÁo menor que zero, digite apenas numeros positivos");
             else{
-                if(preco >= 50 && preco <200)
-                    newpreco = preco * 0.95;
-                else if (preco >= 200 && preco < 500)
-                    newpreco = preco * 0.94;
-                else if (preco >= 500 && preco < 1000)
-                    newpreco = preco * 0.93;
-                else
-                    newpreco = preco * 0.92;
-                JOptionPane.showMessageDialog(null, "Nome do produto: " + nome + "\n"+
-                        "Valor original original do produto: " + preco + "\n"+
-                        "Valor do produto com desconto: " + newpreco);
+                if(preco<50)
+                    JOptionPane.showMessageDialog(null,"N„o tem desconto para esse produto");
+                else{
+                    if(preco >= 50 && preco <200)
+                        newpreco = preco * 0.95;
+                    else if (preco >= 200 && preco < 500)
+                        newpreco = preco * 0.94;
+                    else if (preco >= 500 && preco < 1000)
+                        newpreco = preco * 0.93;
+                    else
+                        newpreco = preco * 0.92;
+                    JOptionPane.showMessageDialog(null, "Nome do produto: " + nome + "\n"+
+                            "Valor original original do produto: " + preco + "\n"+
+                            "Valor do produto com desconto: " + newpreco);
+                }
             }
-        }
+		}catch (Exception e) {
+			JOptionPane.showMessageDialog(null,e.getMessage());
+		}
 	}
 	static void questao2() {
 		float r[] = new float[4];
@@ -79,19 +83,21 @@ public class Questao5 {
 	static void questao3(){
 		String login, senha;
 		int ten = 0;
+		boolean acesso = false;
 		do {
 		login = JOptionPane.showInputDialog("ForneÁa o login");
 		senha = JOptionPane.showInputDialog("ForneÁa a senha");
 		ten+=1;
 		if (login.equals("java8") && senha.equals("java8")) {
-				JOptionPane.showMessageDialog(null, "Login e Senha aceitos" );
-				ten = 4;
+				JOptionPane.showMessageDialog(null, "Login e Senha aceitos!" );
+				acesso = true;
 		}
 		else
-			JOptionPane.showMessageDialog(null, "Falha, verifique login e senha\n" +
-					"VocÍ tem mais "+ (3-ten) + " tentativas");
+			
+			JOptionPane.showMessageDialog(null, "Falha, verifique login e senha!\n" +
+					"VocÍ tem mais "+ (3-ten) + " tentativa(s)!");
 		
-		} while (ten < 3);
+		} while (ten < 3 && acesso == false);
 	}
 	static void questao4(){
 		int tab;
