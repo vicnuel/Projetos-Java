@@ -2,7 +2,7 @@ package questoes;
 
 import javax.swing.JOptionPane;
 
-public class questao1 {
+public class Questao1 {
 
 	public static void main(String[] args) {
 		try {
