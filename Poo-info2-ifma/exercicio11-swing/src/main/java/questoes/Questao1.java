@@ -115,10 +115,7 @@ public class Questao1 extends javax.swing.JFrame {
             
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(null, "Erro! Data invalida. Digite uma data valida no formato dd/MM/YYY");
-        }
-        
-        
-        
+        }       
         
     }//GEN-LAST:event_btnCalcularActionPerformed
 

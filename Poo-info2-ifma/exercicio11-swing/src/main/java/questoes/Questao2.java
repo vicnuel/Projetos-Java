@@ -6,6 +6,7 @@
 package questoes;
 
 import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -52,6 +53,7 @@ public class Questao2 extends javax.swing.JFrame {
 
         txtReal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        txtConversao.setEditable(false);
         txtConversao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -98,14 +100,18 @@ public class Questao2 extends javax.swing.JFrame {
         // Fonte: openexchangerates.com. Acesso em 22 de agosto de 2021 - 18:56
         String real = txtReal.getText();
         String moeda;
-        DecimalFormat df = new DecimalFormat("$,##0.00");
+        DecimalFormat df = new DecimalFormat();
         if (cbMoeda.getSelectedIndex() == 0 && !real.equals("")){
+            df.applyPattern("$,##0.00");
             moeda = df.format(Double.parseDouble(real)/5.38659);
             txtConversao.setText(moeda);
         
         }else if (cbMoeda.getSelectedIndex() == 1 && !real.equals("")){
+            df.applyPattern("€,##0.00");
             moeda = df.format(Double.parseDouble(real) / 6.29995053);
             txtConversao.setText(moeda);
+        } else{
+            JOptionPane.showMessageDialog(null, "Informe o valor em reais");
         }
     }//GEN-LAST:event_cbMoedaActionPerformed
 
