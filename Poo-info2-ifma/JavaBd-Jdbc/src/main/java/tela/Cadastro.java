@@ -3,8 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tabela;
+package tela;
 
+import connection.ConnectionFactory;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,6 +29,54 @@ public class Cadastro extends javax.swing.JFrame {
     public Cadastro() {
         initComponents();
     }
+    //private static final String DRIVER = "com.mysql.cj.jdbc.Drive";
+  
+    private void atualizar(){
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            // TODO add your handling code here:
+            DefaultTableModel tabelaModelo = (DefaultTableModel) tabela.getModel();
+            
+            pst = con.prepareStatement("select * from pessoa order by nome");
+            
+            rs = pst.executeQuery();
+            ResultSetMetaData rsData = rs.getMetaData();
+            
+            int i, q, id, deleteItem;
+            
+            q = rsData.getColumnCount();
+            
+            tabelaModelo.setRowCount(0);
+            while (rs.next()) {                
+                Vector columnData = new Vector();
+                
+                for ( i = 0; i < q; i++) {
+                    
+                    columnData.add(rs.getString("nome"));
+                    columnData.add(rs.getString("rg"));
+                    columnData.add(rs.getString("cpf"));
+                    columnData.add(rs.getString("telefone"));
+                    columnData.add(rs.getString("celular"));
+                    
+                }
+                tabelaModelo.addRow(columnData);
+            }
+            
+            
+            
+            
+            //tabelaModelo.addRow(new String [] {});
+        } catch (SQLException ex) {
+            Logger.getLogger(Cadastro.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+             ConnectionFactory.closeConnection(con, pst, rs);
+         }
+         
+    
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,6 +101,7 @@ public class Cadastro extends javax.swing.JFrame {
         rg = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
+        pull = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -130,45 +189,52 @@ public class Cadastro extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabela);
 
+        pull.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        pull.setText("Pull");
+        pull.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pullActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel2))
-                                .addGap(34, 34, 34)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(adicionar)
-                                        .addGap(51, 51, 51)
-                                        .addComponent(remover))
-                                    .addComponent(rg, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(celular, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                                        .addComponent(telefone, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cpf, javax.swing.GroupLayout.Alignment.LEADING))))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2))
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(nome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(celular, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                                .addComponent(telefone, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cpf, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(rg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(adicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pull, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(remover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(58, 58, 58))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -180,22 +246,28 @@ public class Cadastro extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(rg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
+                        .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(remover)))
+                    .addComponent(adicionar))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(celular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(remover)
-                    .addComponent(adicionar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(celular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addComponent(pull, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -206,33 +278,84 @@ public class Cadastro extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         String nomeTable = nome.getText();
-        String rgTable = rg.getText();
-        String cpfTable = cpf.getText();
-        String telefoneTable = telefone.getText();
-        String celularTable = celular.getText();
+        String rgTable = (rg.getText().equals(""))? null: rg.getText();
+        String cpfTable = cpf.getText().replaceAll("[.-]", "");
+        String telefoneTable = (telefone.getText().equals(""))? null: telefone.getText().replaceAll("[().-]","");
+        String celularTable = celular.getText().replaceAll("[().-]","");
+        Connection con = ConnectionFactory.getConnection(); 
+        PreparedStatement pst =null;
         
-        DefaultTableModel tabelaModelo = (DefaultTableModel) tabela.getModel();
         
-        tabelaModelo.addRow(new String [] {nomeTable, rgTable, cpfTable.replaceAll("[.-]", ""), telefoneTable.replaceAll("[().-]",""), celularTable.replaceAll("[().-]","")});
+        try {
+             if (nomeTable.equals("") || cpfTable.equals("") || celularTable.equals("")) {
+                 JOptionPane.showMessageDialog(null, "Os campos nome, cpf e celular precisão estarem preenchidos. " +
+                         "Por favor, verifique.");
+             } else{
+                //bd
+                pst = con.prepareStatement("insert into pessoa (nome, rg, cpf, telefone, celular) values" +
+                "(?, ?, ?, ?, ?)");
+            
+            
+                pst.setString(1, nomeTable);
+                pst.setString(2, rgTable);
+                pst.setString(3, cpfTable);
+                pst.setString(4, telefoneTable);
+                pst.setString(5, celularTable);
+           
+                pst.executeUpdate();
+            
+                JOptionPane.showMessageDialog(null, "registro adicionado");
+                
+                
+                //tabela
+                atualizar();
+                /*
+                tabelaModelo.addRow(new String [] {nomeTable, rgTable, cpfTable, telefoneTable, celularTable});
+                */
+                nome.setText("");
+                rg.setText("");
+                cpf.setText("");
+                telefone.setText("");
+                celular.setText("");
         
-        nome.setText("");
-        rg.setText("");
-        cpf.setText("");
-        telefone.setText("");
-        celular.setText("");
+                nome.requestFocus(); 
+            }    
+        } catch (SQLException ex) {
+            Logger.getLogger(Cadastro.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+             ConnectionFactory.closeConnection(con, pst);
+        }
+         
         
-        nome.requestFocus();
     }//GEN-LAST:event_adicionarActionPerformed
 
     private void removerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerActionPerformed
-        // TODO add your handling code here:
         DefaultTableModel tabelaModelo = (DefaultTableModel) tabela.getModel();
-        
-        int[] indices = tabela.getSelectedRows();
-        for (int i = indices.length - 1; i >= 0; i--) {
-            tabelaModelo.removeRow(indices[i]);
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement pst =null;
+      
+        try {
+            // TODO add your handling code here:
+     
+            int[] indices = tabela.getSelectedRows();
+            
+            for (int i = indices.length - 1; i >= 0; i--) {
+                pst = con.prepareStatement("delete from pessoa " +
+                "where cpf = " + tabelaModelo.getValueAt(indices[i], 2).toString()); 
+                pst.executeUpdate();
+                tabelaModelo.removeRow(indices[i]);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Cadastro.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+             ConnectionFactory.closeConnection(con, pst);
         }
+        
     }//GEN-LAST:event_removerActionPerformed
+
+    private void pullActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pullActionPerformed
+        atualizar();
+    }//GEN-LAST:event_pullActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,6 +384,8 @@ public class Cadastro extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -281,6 +406,7 @@ public class Cadastro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nome;
+    private javax.swing.JButton pull;
     private javax.swing.JButton remover;
     private javax.swing.JTextField rg;
     private javax.swing.JTable tabela;
