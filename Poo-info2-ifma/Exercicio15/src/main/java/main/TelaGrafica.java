@@ -299,6 +299,7 @@ public class TelaGrafica extends javax.swing.JFrame {
         jTabbedPane2.getAccessibleContext().setAccessibleName("Contatos");
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void salvarContato(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarContato

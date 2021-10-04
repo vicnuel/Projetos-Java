@@ -89,7 +89,7 @@ public class DAO<T>{
         
         return t;
     }
-    public void remove(Integer id){
+    public void remove(long id){
         EntityManager em = new ConnectionFactory().getConnection();
         T t = null;
         
